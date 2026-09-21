@@ -2,10 +2,14 @@ package com.estefanie.preciogt.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val OrangePrimary = Color(0xFFF57C00)
+val OrangeDark = Color(0xFF9A4300)
+val OrangeContainer = Color(0xFFFFE0C2)
+val Navy = Color(0xFF202432)
+val BlueGray = Color(0xFF56627A)
+val AppBackground = Color(0xFFF8F7FF)
+val AppSurface = Color(0xFFFFFFFF)
+val AppOutline = Color(0xFFE7BFA8)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val OrangeLight = Color(0xFFFFB46B)
+val DarkSurface = Color(0xFF1B1B1F)
