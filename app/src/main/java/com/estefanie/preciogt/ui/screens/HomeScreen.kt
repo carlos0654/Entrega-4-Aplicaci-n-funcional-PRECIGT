@@ -1,5 +1,6 @@
 package com.estefanie.preciogt.ui.screens
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,6 +28,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,6 +63,16 @@ fun HomeScreen(
         }
     }
 
+    val context = LocalContext.current
+
+    val prefs = remember(context) {
+        context.getSharedPreferences(
+            "PerfilUsuario",
+            Context.MODE_PRIVATE
+        )
+    }
+    var name = prefs.getString("name", "usuario nuevo")
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(bottom = 24.dp)
@@ -75,7 +87,7 @@ fun HomeScreen(
         item {
             Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 18.dp)) {
                 Text(
-                    text = "¡Hola de nuevo, Carlos!",
+                    text = "¡Hola ${name}!",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )

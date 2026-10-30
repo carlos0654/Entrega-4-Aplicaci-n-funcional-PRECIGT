@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.estefanie.preciogt.ui.components.SearchBar
 import com.estefanie.preciogt.ui.theme.PrecioGtTheme
 
 data class PriceAlert(
@@ -43,53 +45,80 @@ private val mockAlerts = listOf(
     PriceAlert("Smart TV 4K 55 pulgadas", "ElectroHogar", "Q7,500", "Q6,999", true)
 )
 
+
+
 @Composable
-fun AlertsScreen(modifier: Modifier = Modifier) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        item {
-            Text(
-                text = "Mis avisos",
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = "Activa o pausa las alertas de precios de ejemplo.",
-                color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.padding(top = 4.dp, bottom = 8.dp)
-            )
+fun AlertsScreen(modifier: Modifier = Modifier,
+                 products: List<Product> = mockProducts) {
+    var query by rememberSaveable { mutableStateOf("") }
+    val filteredProducts = remember(query, products) {
+        if (query.isBlank()) products
+        else products.filter {
+            it.name.contains(query, ignoreCase = true) ||
+                    it.store.contains(query, ignoreCase = true)
         }
-        items(mockAlerts, key = { it.product }) { alert ->
-            var enabled by rememberSaveable(alert.product) { mutableStateOf(alert.active) }
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.NotificationsActive,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(alert.store.uppercase(), style = MaterialTheme.typography.labelSmall)
-                        Text(alert.product, fontWeight = FontWeight.SemiBold)
-                        Text(
-                            "Actual ${alert.currentPrice} · Meta ${alert.targetPrice}",
-                            color = MaterialTheme.colorScheme.secondary
+    }
+
+    Column(
+        modifier = modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+            SearchBar(
+                query = query,
+                onQueryChange = { query = it },
+                modifier = Modifier.padding(top = 12.dp)
+            )
+
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+
+            item {
+                Text(
+                    text = "Mis avisos",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "Activa o pausa las alertas de precios de ejemplo.",
+                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.padding(top = 4.dp, bottom = 8.dp)
+                )
+            }
+            items(mockAlerts, key = { it.product }) { alert ->
+                var enabled by rememberSaveable(alert.product) { mutableStateOf(alert.active) }
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.NotificationsActive,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
                         )
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(alert.store.uppercase(), style = MaterialTheme.typography.labelSmall)
+                            Text(alert.product, fontWeight = FontWeight.SemiBold)
+                            Text(
+                                "Actual ${alert.currentPrice} · Meta ${alert.targetPrice}",
+                                color = MaterialTheme.colorScheme.secondary
+                            )
+                        }
+                        Switch(checked = enabled, onCheckedChange = { enabled = it })
                     }
-                    Switch(checked = enabled, onCheckedChange = { enabled = it })
                 }
             }
         }
     }
+
 }
 
 @Preview(showBackground = true)

@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -31,7 +33,7 @@ fun ProductCard(
 ) {
     Card(
         modifier = modifier
-            .width(190.dp)
+            .width(180.dp)
             .padding(4.dp),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -43,7 +45,7 @@ fun ProductCard(
         ) {
             Box(
                 modifier = Modifier
-                    .size(54.dp),
+                    .size(50.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(

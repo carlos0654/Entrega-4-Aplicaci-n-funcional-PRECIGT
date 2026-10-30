@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "353205527484",
+    "project_id": "precigt-3b9a3",
+    "storage_bucket": "precigt-3b9a3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353205527484:android:0c533521c7c0fa112441b9",
+        "android_client_info": {
+          "package_name": "com.estefanie.preciogt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAANuL5eJmqAiQsBdnhe2u3e-3rDfKwRRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
