@@ -156,9 +156,9 @@ fun HomeScreen(
                     )
                     Column(modifier = Modifier.weight(1f)) {
                         Text("Compra semanal", fontWeight = FontWeight.Bold)
-                        Text("3 productos · Supermercado A")
+                        Text("3 productos · Despensa semanal")
                         Text(
-                            "Q124.50",
+                            "Q340.50",
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold
                         )

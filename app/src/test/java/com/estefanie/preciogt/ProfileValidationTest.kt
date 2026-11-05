@@ -1,9 +1,6 @@
 package com.estefanie.preciogt
 
-import com.estefanie.preciogt.ui.screens.isProfileFormValid
-import com.estefanie.preciogt.ui.screens.validateBudget
-import com.estefanie.preciogt.ui.screens.validateEmail
-import com.estefanie.preciogt.ui.screens.validateName
+import com.estefanie.preciogt.ui.viewmodel.ProfileUiState
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -11,23 +8,50 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ProfileValidationTest {
+
     @Test
-    fun validProfileEnablesSubmission() {
-        assertTrue(isProfileFormValid("Carlos", "carlos@email.com", "1500"))
+    fun validProfileIsValid() {
+        val state = ProfileUiState(
+            name = "Carlos",
+            email = "carlos@email.com",
+            budget = "1500"
+        )
+
+        assertTrue(state.isFormValid)
     }
 
     @Test
-    fun invalidProfileKeepsSubmissionDisabled() {
-        assertFalse(isProfileFormValid("Ca", "correo-invalido", "0"))
+    fun invalidProfileIsNotValid() {
+        val state = ProfileUiState(
+            name = "Ca",
+            email = "correo-invalido",
+            budget = "0"
+        )
+
+        assertFalse(state.isFormValid)
     }
 
     @Test
-    fun validatorsReportAndClearErrorsInRealTime() {
-        assertNotNull(validateName("A"))
-        assertNotNull(validateEmail("carlos"))
-        assertNotNull(validateBudget("texto"))
-        assertNull(validateName("Carlos"))
-        assertNull(validateEmail("carlos@email.com"))
-        assertNull(validateBudget("950.50"))
+    fun errorsClearWhenValuesAreCorrected() {
+        val invalidState = ProfileUiState(
+            name = "A",
+            email = "carlos",
+            budget = "texto"
+        )
+
+        assertNotNull(invalidState.nameError)
+        assertNotNull(invalidState.emailError)
+        assertNotNull(invalidState.budgetError)
+
+        val correctedState = invalidState.copy(
+            name = "Carlos",
+            email = "carlos@email.com",
+            budget = "950.50"
+        )
+
+        assertNull(correctedState.nameError)
+        assertNull(correctedState.emailError)
+        assertNull(correctedState.budgetError)
+        assertTrue(correctedState.isFormValid)
     }
 }
